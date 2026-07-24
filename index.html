@@ -19,6 +19,18 @@
   padding: 0;
 }
 
+        /* Asegura que el sobre reciba el clic y se pueda abrir */
+.carta-universo {
+  cursor: pointer;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.carta-universo.abierta {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 /* --- Estilos para la Animación de la Carta Overlay --- */
 .carta-universo {
   position: fixed;
@@ -513,42 +525,24 @@
     </div>
  
     <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const cartaUniverso = document.getElementById('cartaUniverso');
-    const miCarta = document.getElementById('miCarta');
+  // Ejecutar cuando la página esté lista
+  window.addEventListener('load', function () {
+    const cartaUniverso = document.getElementById('cartaUniverso') || document.querySelector('.carta-universo');
     const musica = document.getElementById('dimple-audio');
 
-    // Función principal para abrir la carta y sonar la música
-    function abrirCarta() {
-      // 1. Intenta reproducir la música de inmediato
-      if (musica) {
-        musica.play().then(() => {
-          console.log("Música reproduciéndose correctamente");
-        }).catch(err => {
-          console.log("Error al reproducir audio:", err);
-        });
-      }
-
-      // 2. Hace la animación para abrir y desaparecer la carta
-      if (cartaUniverso) {
-        cartaUniverso.classList.add('abierta');
-        setTimeout(() => {
-          cartaUniverso.style.opacity = '0';
-          setTimeout(() => {
-            cartaUniverso.style.display = 'none';
-          }, 500);
-        }, 3000);
-      }
-    }
-
-    // Escucha el clic en el sobre principal
-    if (miCarta) {
-      miCarta.addEventListener('click', abrirCarta);
-    }
-
-    // Escucha el clic en todo el contenedor por si hace clic en el botón "ABRIR"
     if (cartaUniverso) {
-      cartaUniverso.addEventListener('click', abrirCarta);
+      // Al hacer clic en CUALQUIER PARTE de la tarjeta/sobre
+      cartaUniverso.onclick = function () {
+        // 1. Reproducir música
+        if (musica) {
+          musica.play().catch(function(e) {
+            console.log("Audio play error:", e);
+          });
+        }
+
+        // 2. Ocultar la carta directamente
+        cartaUniverso.classList.add('abierta');
+      };
     }
   });
 </script>
