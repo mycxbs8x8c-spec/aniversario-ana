@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Primer Aniversario</title>
+    <!-- Fuentes de Google Fonts para imitar el estilo manuscrito y elegante -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@400;600;700&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+ 
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- Estilos para la Animación de la Carta Overlay --- */
+.carta-universo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  perspective: 1000px;
+  transition: opacity 0.5s ease;
+}
+
+.carta {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  background-color: #fff8e1;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 1s ease;
+  transform-style: preserve-3d;
+}
+
+.carta-solapa {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fce4ec;
+  border-bottom: 2px solid #ccc;
+  border-radius: 5px 5px 0 0;
+  clip-path: polygon(0 0, 100% 0, 100% 10%, 50% 50%, 0 10%);
+  transition: transform 0.8s ease;
+  transform-origin: top;
+  z-index: 3;
+}
+
+.carta-cuerpo {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.carta-boton {
+  background: #ff5252;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background 0.3s;
+}
+
+.carta-boton:hover {
+  background: #ff1744;
+}
+
+.papel-interior {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  background: white;
+  padding: 20px;
+  border-radius: 3px;
+  z-index: 1;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+.papel-interior h3 { margin-top: 0; font-size: 18px; color: #ff5252; }
+.papel-interior p { font-size: 14px; line-height: 1.4; }
+
+.carta-universo.abierta .carta-solapa {
+  transform: rotateX(-160deg);
+  z-index: 1;
+}
+
+.carta-universo.abierta .carta {
+  transform: translateY(100px);
+}
+
+.carta-universo.abierta .carta-boton {
+  display: none;
+}
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #d1c7bd;
+            font-family: 'Cormorant Garamond', serif;
+            color: #2b2b2b;
+            display: flex;
+            flex-direction: column; 
+            align-items: center;  
+            padding: 20px;
+        }
+
+       /* Contenedor principal con efecto de textura de papel */
+.paper-container {
+  width: 100%;
+  max-width: 850px;
+  background-color: #f7f3ed;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  padding: 30px 40px;
+  position: relative;
+  margin: 0 auto;
+}
+
+        /* Reproductor superior */
+        .header-player {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .menu-btn {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .music-widget {
+            display: flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.85);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 30px;
+            gap: 12px;
+        }
+
+        .song-info {
+            display: flex;
+            flex-direction: column;
+            font-size: 12px;
+        }
+
+        .song-title {
+            font-weight: bold;
+        }
+
+        .song-artist {
+            color: #ccc;
+            font-size: 10px;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Sección de Contador de Tiempo */
+        .counter-card {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            float: right;
+            width: 320px;
+            margin-left: 20px;
+            box-shadow: 2px 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .script-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 32px;
+            color: #3b2a26;
+        }
+
+        .date-sub {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .timer-grid {
+            display: flex;
+            justify-content: space-around;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .timer-number {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .timer-label {
+            font-size: 9px;
+            letter-spacing: 1px;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        /* Menú de Navegación */
+        .nav-tabs {
+            display: flex;
+            justify-content: space-around;
+            border-bottom: 1px solid #dcd3c8;
+            padding-bottom: 10px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            clear: both;
+        }
+
+        .tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .tab-item.active {
+            color: #2b2b2b;
+            font-weight: bold;
+            border-bottom: 2px solid #2b2b2b;
+        }
+
+        /* Estilos de las Fotos Polaroid */
+        .polaroid {
+            background: white;
+            padding: 12px 12px 35px 12px;
+            box-shadow: 3px 5px 15px rgba(0,0,0,0.15);
+            width: 280px;
+            position: relative;
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        /* Cinta adhesiva (Washi Tape) */
+        .tape {
+            position: absolute;
+            top: -10px;
+            left: 35%;
+            width: 80px;
+            height: 20px;
+            background-color: rgba(220, 210, 190, 0.7);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transform: rotate(-3deg);
+        }
+
+        /* Filas de Contenido */
+        .content-row {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 40px;
+            align-items: center;
+        }
+
+        .content-row.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .text-block {
+            flex: 1;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .text-block h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 34px;
+            color: #3b2a26;
+            margin-bottom: 10px;
+        }
+
+        .text-block p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        /* Rotaciones personalizadas para las polaroids */
+        .rot-left { transform: rotate(-4deg); }
+        .rot-right { transform: rotate(3deg); }
+
+        /* Banner inferior */
+        .footer-banner {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px dashed #ccc;
+        }
+
+        .footer-banner h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 36px;
+        }
+
+        .mini-note {
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            background: #f2ebe1;
+            padding: 10px 15px;
+            border: 1px solid #e0d5c5;
+            font-family: 'Dancing Script', cursive;
+            font-size: 18px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="dimple-audio" src="dimple.mp3" loop></audio>
+    <div class="paper-container">
+
+        <!-- Barra Superior / Reproductor -->
+
+     <!-- Contenedor principal de la carta -->
+<div class="carta-universo" id="cartaUniverso">
+    
+    <!-- La carta física en sí -->
+    <div class="carta" id="miCarta">
+        
+        <!-- Solapa de la carta (parte de arriba que se abre) -->
+        <div class="carta-solapa"></div>
+        
+        <!-- Cuerpo de la carta -->
+        <div class="carta-cuerpo">
+            <!-- Botón o texto en el centro -->
+            <div id="btnAbrir" class="carta-boton">Abrir</div>
+        </div>
+
+        <!-- Papel interior (lo que se revela) -->
+        <div class="papel-interior">
+            <h3>¡Espero te guste!</h3>
+            <p>Hecho con mucho cariño.</p>
+        </div>
+    </div>
+        
+    </div>
+</div>
+
+        <div class="header-player">
+            <div class="menu-btn"><i class="fa-solid fa-bars"></i></div>
+            <div class="music-widget">
+                <img src="dimple.jpg" width="100" height="100" alt="cover" style="border-radius: 50%;">
+                <div class="song-info">
+                    <span class="song-title">Dimple</span>
+                    <span class="song-artist"> BTS <i class="fa-solid fa-heart" style="color: #e74c3c;"></i></span>
+                </div>
+                <div class="player-controls">
+                    <i id="btnPlay" class="fa-solid fa-play"></i>
+                    <i class="fa-brands fa-spotify"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Encabezado Principal y Contador -->
+        <div>
+            <div class="counter-card">
+                <h2 class="script-title">Nuestro tiempo juntos ♡</h2>
+                <p class="date-sub">Desde el sábado<br><strong>25 de julio de 2026</strong></p>
+                <div class="timer-grid">
+                    <div>
+                        <div id="dias" class="timer-number">365</div>
+                        <div class="timer-label">Días</div>
+                    </div>
+                    <div><span class="timer-number">:</span></div>
+                    <div>
+                        <div id="horas" class="timer-number">08</div>
+                        <div class="timer-label">Horas</div>
+                    </div>
+                    <div><span class="timer-number">:</span></div>
+                    <div>
+                        <div id="minutos" class="timer-number">45</div>
+                        <div class="timer-label">Minutos</div>
+                    </div>
+                    <div><span class="timer-number">:</span></div>
+                    <div>
+                        <div id="segundos" class="timer-number">27</div>
+                        <div class="timer-label">Segundos</div>
+                    </div>
+                </div>
+            </div>
+
+            <h1 class="script-title" style="font-size: 55px; line-height: 1;">Feliz<br><span style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 40px; font-weight: normal;">primer aniversario ♡</span></h1>
+            <p style="font-family: 'Dancing Script', cursive; font-size: 20px; color: #555; margin-top: 10px;">Para mi princesa ♥️</p>
+        </div>
+
+        <!-- Pestañas de Navegación -->
+        <div class="nav-tabs">
+            <div class="tab-item active">
+                <i class="fa-regular fa-heart"></i>
+                <span>Nuestra historia</span>
+            </div>
+            <div class="tab-item">
+                <i class="fa-regular fa-image"></i>
+                <span>Recuerdos</span>
+            </div>
+            <div class="tab-item">
+                <i class="fa-regular fa-envelope"></i>
+                <span>Carta para ti</span>
+            </div>
+            <div class="tab-item">
+                <i class="fa-regular fa-star"></i>
+                <span>Para siempre</span>
+            </div>
+        </div>
+
+        <!-- Bloque 1: Para mi princesa -->
+        <div class="content-row reverse">
+            <div class="polaroid rot-right">
+                <div class="tape"></div>
+                <img src="primer ft.jpeg" alt="primer ft.jpeg">
+            </div>
+            <div class="text-block">
+                <h3>Para mi princesa ♥️</h3>
+                <p>Jamás imaginé que llegaríamos hasta aquí si alguien me hubiera dicho hace un año que tú te convertirías en la persona más importante de mi vida probablemente no lo habría creído pero aquí estamos celebrando nuestro primer año juntos y no puedo evitar mirar hacia atrás y sonreír.</p>
+                <p>Todavía recuerdo la primera vez que salimos estabas tan hermosa que parecía imposible dejar de mirarte yo en cambio estaba tan nervioso y era tan penoso que apenas podía hablar mi mente estaba completamente en blanco quería decirte tantas cosas hacerte reír conocerte más pero los nervios me ganaban aun así sin darme cuenta ese día comenzó la historia más bonita que he vivido.</p>
+            </div>
+        </div>
+
+        <!-- Bloque 2: Gracias mi cielo -->
+        <div class="content-row">
+            <div class="polaroid rot-left">
+                <div class="tape"></div>
+                <img src="segunda ft.jpeg" alt="Foto juntos 2">
+            </div>
+            <div class="text-block">
+                <h3>Gracias mi cielo ♡</h3>
+                <p>Gracias por este año lleno de aventuras y recuerdos muy bonitos gracias por cada salida por cada conversación hasta tarde por cada abrazo que me hizo sentir que todo iba a estar bien por cada beso por cada sonrisa y hasta por cada discusión porque incluso esos momentos nos enseñaron a conocernos mejor y a valorar aún más lo que tenemos.</p>
+                <p>No ha sido un camino perfecto hemos tenido problemas malentendidos y momentos en los que parecía que todo se complicaba pero hay algo que me hace sentir orgulloso de nosotros siempre volvemos a encontrarnos siempre volvemos a estar unidos y eso me demuestra que nuestro amor es más fuerte que cualquier dificultad.</p>
+            </div>
+        </div>
+
+        <!-- Bloque 3: Perdóname mi pichucha -->
+        <div class="content-row reverse">
+            <div class="polaroid rot-right">
+                <div class="tape"></div>
+                <img src="tercer ft.jpeg" alt="tercer ft.jpeg">
+            </div>
+            <div class="text-block">
+                <h3>Perdóname mi pichucha ♡</h3>
+                <p>También quiero pedirte perdon amor por todas las veces que te hice llorar por las veces que te hice dudar de mi, enserio quisiera pedirte perdon y agradecer por que apesar de mis tontadas siempre haz estado a mi lado sin importar lo que pase, eres lo mas importante para mi y amo pasar tiempo contigo espero y nunca te vayas de mi vida por que yo nunca pensare en irme de la tuya.</p>
+            </div>
+        </div>
+
+        <!-- Bloque 4: Te amo mi princesa -->
+        <div class="content-row">
+            <div class="polaroid rot-left">
+                <div class="tape"></div>
+                <img src="quinta ft.jpeg" alt="quinta ft.jpeg">
+            </div>
+            <div class="text-block">
+                <h3>Te amo mi princesa ♥️</h3>
+                <p>Quiero que nunca dudes de lo que siento por ti te amo con todo mi corazón con toda mi alma y con cada parte de mí te amo cuando sonríes cuando te me emocionas cuando me abrazas fuerte y hasta cuando discutimos porque incluso en esos momentos mi corazón sigue eligiéndote a ti.</p>
+                <p>No sé qué hice para merecer a una mujer tan increíble como tú pero todos los días le doy gracias a Dios por haberte puesto en mi camino llegaste cuando menos lo esperaba y cambiaste mi vida de una manera que jamás imaginé me enseñaste que amar no solo es decir te amo sino demostrarlo con pequeños detalles con paciencia con comprensión y con el deseo de nunca soltar la mano de la persona que amas.</p>
+            </div>
+        </div>
+
+        <!-- Pie de página -->
+        <div class="footer-banner">
+            <h2>Si volviera a vivir mi vida mil veces...<br>mil veces volvería a elegirte. ♡</h2>
+        </div>
+
+        <!-- Nota al pie pegada -->
+        <div class="mini-note">
+            ♡ Feliz primer aniversario<br>Te amo hoy, mañana y siempre por el resto de mi vida.
+        </div>
+
+    </div>
+ 
+    <script>
+         
+         const cartaUniverso = document.getElementById('cartaUniverso');
+const miCarta = document.getElementById('miCarta');
+
+miCarta.addEventListener('click', function() {
+    cartaUniverso.classList.add('abierta');
+    
+    setTimeout(() => {
+        cartaUniverso.style.opacity = '0';
+        setTimeout(() => {
+            cartaUniverso.style.display = 'none';
+        }, 500);
+    }, 4000);
+});
+
+    
+
+     // fecha de inicio: 25 de julio de 2025 alas 00:00:00
+     const fechaInicio = new Date("2025-07-25T00:00:00");
+
+        function actualizarContador() {
+            const ahora = new Date();
+            const diferencia = ahora - fechaInicio; // calcular tiempo transcurrido desde el año pasado
+
+            if (diferencia > 0) {
+            const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
+            const minutos = Math.floor((diferencia / (1000 * 60)) % 60);
+            const segundos = Math.floor((diferencia / 1000) % 60);
+
+            document.getElementById('dias').innerText = dias;
+            document.getElementById('horas').innerText = horas < 10 ? '0' + horas : horas;
+            document.getElementById('minutos').innerText = minutos < 10 ? '0' + minutos : minutos;
+            document.getElementById('segundos').innerText = segundos < 10 ? '0' + segundos : segundos;
+            
+            }
+        }
+         // actualiza cada segundo
+         setInterval(actualizarContador, 1000);
+         actualizarContador(); 
+    
+
+        const musica = document.getElementById('dimple-audio');
+        const btnPlay = document.getElementById('btnPlay');
+
+        btnPlay.addEventListener('click', () => {
+            if (musica.paused) {
+                musica.play();
+                btnPlay.classList.remove('fa-play');
+                btnPlay.classList.add('fa-pause');
+            } else {
+                musica.pause();
+                btnPlay.classList.remove('fa-pause');
+                btnPlay.classList.add('fa-play');
+            }
+        });
+    </script>
+</body>
+</html>
