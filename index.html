@@ -514,19 +514,26 @@
  
     <script>
          
-         const cartaUniverso = document.getElementById('cartaUniverso');
-const miCarta = document.getElementById('miCarta');
+       const cartaUniverso = document.getElementById('cartaUniverso');
+  const miCarta = document.getElementById('miCarta');
+  const musica = document.getElementById('dimple-audio');
 
-miCarta.addEventListener('click', function() {
+  miCarta.addEventListener('click', function() {
+    // 1. Inicia la música al tocar la carta
+    if (musica) {
+      musica.play().catch(e => console.log("Error de audio:", e));
+    }
+
+    // 2. Abre la carta con tu animación exacta
     cartaUniverso.classList.add('abierta');
-    
+
     setTimeout(() => {
-        cartaUniverso.style.opacity = '0';
-        setTimeout(() => {
-            cartaUniverso.style.display = 'none';
-        }, 500);
+      cartaUniverso.style.opacity = '0';
+      setTimeout(() => {
+        cartaUniverso.style.display = 'none';
+      }, 500);
     }, 4000);
-});
+  });
 
     
 
