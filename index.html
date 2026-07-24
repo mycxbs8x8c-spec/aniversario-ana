@@ -513,69 +513,44 @@
     </div>
  
     <script>
-         
-       const cartaUniverso = document.getElementById('cartaUniverso');
-  const miCarta = document.getElementById('miCarta');
-  const musica = document.getElementById('dimple-audio');
+  document.addEventListener('DOMContentLoaded', function () {
+    const cartaUniverso = document.getElementById('cartaUniverso');
+    const miCarta = document.getElementById('miCarta');
+    const musica = document.getElementById('dimple-audio');
 
-  miCarta.addEventListener('click', function() {
-    // 1. Inicia la música al tocar la carta
-    if (musica) {
-      musica.play().catch(e => console.log("Error de audio:", e));
+    // Función principal para abrir la carta y sonar la música
+    function abrirCarta() {
+      // 1. Intenta reproducir la música de inmediato
+      if (musica) {
+        musica.play().then(() => {
+          console.log("Música reproduciéndose correctamente");
+        }).catch(err => {
+          console.log("Error al reproducir audio:", err);
+        });
+      }
+
+      // 2. Hace la animación para abrir y desaparecer la carta
+      if (cartaUniverso) {
+        cartaUniverso.classList.add('abierta');
+        setTimeout(() => {
+          cartaUniverso.style.opacity = '0';
+          setTimeout(() => {
+            cartaUniverso.style.display = 'none';
+          }, 500);
+        }, 3000);
+      }
     }
 
-    // 2. Abre la carta con tu animación exacta
-    cartaUniverso.classList.add('abierta');
+    // Escucha el clic en el sobre principal
+    if (miCarta) {
+      miCarta.addEventListener('click', abrirCarta);
+    }
 
-    setTimeout(() => {
-      cartaUniverso.style.opacity = '0';
-      setTimeout(() => {
-        cartaUniverso.style.display = 'none';
-      }, 500);
-    }, 4000);
+    // Escucha el clic en todo el contenedor por si hace clic en el botón "ABRIR"
+    if (cartaUniverso) {
+      cartaUniverso.addEventListener('click', abrirCarta);
+    }
   });
-
-    
-
-     // fecha de inicio: 25 de julio de 2025 alas 00:00:00
-     const fechaInicio = new Date("2025-07-25T00:00:00");
-
-        function actualizarContador() {
-            const ahora = new Date();
-            const diferencia = ahora - fechaInicio; // calcular tiempo transcurrido desde el año pasado
-
-            if (diferencia > 0) {
-            const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
-            const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
-            const minutos = Math.floor((diferencia / (1000 * 60)) % 60);
-            const segundos = Math.floor((diferencia / 1000) % 60);
-
-            document.getElementById('dias').innerText = dias;
-            document.getElementById('horas').innerText = horas < 10 ? '0' + horas : horas;
-            document.getElementById('minutos').innerText = minutos < 10 ? '0' + minutos : minutos;
-            document.getElementById('segundos').innerText = segundos < 10 ? '0' + segundos : segundos;
-            
-            }
-        }
-         // actualiza cada segundo
-         setInterval(actualizarContador, 1000);
-         actualizarContador(); 
-    
-
-        const musica = document.getElementById('dimple-audio');
-        const btnPlay = document.getElementById('btnPlay');
-
-        btnPlay.addEventListener('click', () => {
-            if (musica.paused) {
-                musica.play();
-                btnPlay.classList.remove('fa-play');
-                btnPlay.classList.add('fa-pause');
-            } else {
-                musica.pause();
-                btnPlay.classList.remove('fa-pause');
-                btnPlay.classList.add('fa-play');
-            }
-        });
-    </script>
+</script>
 </body>
 </html>
